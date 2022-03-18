@@ -26,6 +26,9 @@ app.use(express.json());
 
 dbConecction();
 
+// directorio publico
+app.use(express.static('public'));
+
 
 // rutas
 
