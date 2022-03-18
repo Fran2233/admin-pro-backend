@@ -16,7 +16,7 @@ const generarJWT = (uid) => {
             if (err) {
                 console.log(err);
                 reject('No se genero JWT');
-            }else{
+            } else {
                 resolve(token);
             }
 
@@ -25,6 +25,6 @@ const generarJWT = (uid) => {
 }
 
 
-module.exports={
+module.exports = {
     generarJWT
 }

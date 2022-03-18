@@ -148,6 +148,7 @@ const borrarUser = async (req, res = response) => {
                 ok: false,
                 msg: 'user no encontrado con esa ID!',
             });
+            return;
         }
 
         await Usuario.findByIdAndDelete(uid);
