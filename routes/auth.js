@@ -17,6 +17,7 @@ const router = Router();
 
 
 
+  ///////////////LOGINNN
 router.post('/',
 [
     check('email','Email obligatorio').isEmail(),
@@ -41,6 +42,7 @@ router.post('/',
   )
 
 
+  ///////////////RENOVAR TOKEN
 
 
   router.get('/renew',validarJWT,renewToken  

@@ -38,6 +38,7 @@ const fileUpload = (req, res = response) => {
             ok: false,
             msg: 'extension invalida'
         });
+        return;
     }
 
 
@@ -66,6 +67,7 @@ const fileUpload = (req, res = response) => {
 
         res.json({
             ok: true,
+            nombreArchivo:fileName,
             msg: 'archivo subido!'
         });
     });

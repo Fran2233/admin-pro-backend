@@ -47,7 +47,7 @@ const crearUsuario = async (req, res = response) => {
         if (existeEmail) {
             return res.status(400).json({
                 ok: false,
-                msg: 'El correo ya existe'
+                msg: 'El correo ya existe!!!'
             });
         }
 
@@ -108,7 +108,16 @@ const updateUser = async (req, res = response) => {
                 })
             }
         }
-        campos.email = email;
+
+        if(!usuarioDB.google){
+            campos.email = email;
+
+        }else if(usuarioDB.email !== email){
+            return res.status(400).json({
+                ok: false,
+                msg: 'Usuarios de google no pueden cambiar su correo'
+            });
+        }
 
         // Actualizar
 
