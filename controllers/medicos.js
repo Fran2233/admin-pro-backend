@@ -4,15 +4,63 @@ const Medico = require('../models/medico')
 
 
 const getMedicos = async (req, res = response) => {
+    const desde = Number(req.query.desde) || 0;
+
+    // const medicos = await Medico.find().populate('usuario', 'nombre img')
+    //     .populate('hospital', 'nombre img');
 
 
-    const medicos = await Medico.find().populate('usuario', 'nombre')
-        .populate('hospital', 'nombre');
+    const [medicos, total] = await Promise.all([
+        Medico
+            .find({}, 'nombre img')
+            .populate('usuario', 'nombre email')
+            .populate('hospital', 'nombre')
+            .skip(desde)
+            .limit(5),
+
+        Medico.countDocuments()
+    ]);
+
+
+
     res.json({
         ok: true,
-        medicos
+        medicos,
+        total
     })
 }
+
+
+
+
+getMedicoById = async (req, res = response) => {
+    const id = req.params.id;
+
+
+    try {
+        const medico = await Medico.findById(id)
+            .populate('usuario', 'nombre img')
+            .populate('hospital', 'nombre img');
+
+
+        res.json({
+            ok: true,
+            medico,
+            
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.json({
+            ok: false,
+            msg: ' problema con url'
+        })
+    }
+
+
+}
+
+
 
 
 const crearMedico = async (req, res = response) => {
@@ -95,7 +143,7 @@ const updateMedico = async (req, res = response) => {
 }
 
 
-const borrarMedico = async(req, res = response) => {
+const borrarMedico = async (req, res = response) => {
 
 
     const id = req.params.id;
@@ -135,7 +183,7 @@ const borrarMedico = async(req, res = response) => {
 
 
 
-   
+
 }
 
 
@@ -143,5 +191,6 @@ module.exports = {
     getMedicos,
     crearMedico,
     updateMedico,
-    borrarMedico
+    borrarMedico,
+    getMedicoById
 }
